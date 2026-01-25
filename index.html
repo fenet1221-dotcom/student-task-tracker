@@ -12,28 +12,37 @@
             <nav>
                 <ul>
                     <li><a href="index.html">Home</a></li>
-                    <li><a href="about.html">About</a></li>
+                    <li><a href="tasks.html">About</a></li>
                 <li><a href="contact.html">Contact</a></li>
                 </ul>
             </nav>
         </header>
         <main> 
-            <section class="task input">
-                <h2>add a new task</h2>
-                <form id="taskform">
-                    <label for="taskTitle">Task Title</label>
-                    <input type="text" id="taskTitle" name="taskTitle" required>
-                    <button type="submit"> ADD TASK</button>
+            <section class="landing">
+            <h2>Welcome to Student Task Tracker</h2>
+            <p>
+                Stay organized and manage your daily tasks efficiently. 
+                This web application helps you track tasks, mark them as complete, 
+                and even store them in your browser for future use.
+            </p>
 
-                </form>
-            </section>
-            <section class="task-list">
-                <h2> your taskes</h2>
-                <ul id="tasks">
+            <p>
+                Perfect for students who want a simple, clean way to organize their tasks 
+                without distractions.
+            </p>
 
-                </ul>
-            </section>
-        </main>
+            <a href="tasks.html" class="btn">Go to Task Manager</a>
+        </section>
+             <section class="features">
+            <h2>Key Features</h2>
+            <ul>
+                <li>Add new tasks quickly</li>
+                <li>Mark tasks as completed</li>
+                <li>Delete tasks easily</li>
+                <li>Tasks are saved in your browser using localStorage</li>
+            </ul>
+        </section>
+    </main>
         <footer>
         <p>&copy; 2026 Student Task Tracker</p>
     </footer>
