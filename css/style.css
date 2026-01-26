@@ -1,0 +1,143 @@
+header,
+nav,
+header * {
+    transform: none !important;
+}
+
+
+header {
+    background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+    padding: 1.5rem 2rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+header h1 {
+    color: white;
+    margin: 0;
+    font-size: 1.6rem;
+}
+nav {
+    display: flex;
+    gap: 1.5rem;
+}
+
+nav a {
+    display: inline-flex;
+    align-items: center;
+
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+
+    padding: 0.3rem 0.6rem;
+    line-height: 1;
+
+    position: relative;
+}
+
+
+
+
+nav a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -5px;
+    width: 0;
+    height: 2px;
+    background-color: #00eaff;
+    transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+    width: 100%;
+}
+.landing {
+    background-image: url("../images/books.png");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    color: white;
+    padding: 4rem 2rem;
+    border-radius: 12px;
+
+    position: relative;
+}
+.landing::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.55);
+    border-radius: 12px;
+}
+.landing > * {
+    position: relative;
+    z-index: 1;
+}
+.landing {
+    margin-top: 1rem;
+}
+.landing {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* vertical centering */
+    align-items: center;     /* horizontal centering */
+    text-align: center;      /* text centered inside */
+    min-height: 300px;       /* optional: ensures section has enough height */
+}
+
+.landing .btn {
+    display: inline-block;       /* makes padding work */
+    padding: 0.6rem 1.2rem;      /* size of the button */
+    background-color: #3498db;   /* button background */
+    color: white;                /* text color */
+    text-decoration: none;       /* removes underline */
+    border-radius: 8px;          /* rounded corners */
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.landing .btn:hover {
+    background-color: #2980b9;   /* darker shade on hover */
+    transform: translateY(-2px);  /* subtle lift effect */
+}
+
+.testimonial-container {
+    display: flex;
+    flex-wrap: nowrap;          
+    overflow-x: auto;
+    gap: 2rem;
+    padding: 1rem;
+}
+.testimonial-container::-webkit-scrollbar {
+    height: 10px;
+}
+
+.testimonial-container::-webkit-scrollbar-thumb {
+    background: #2c5364;
+    border-radius: 10px;
+}
+.testimonial-card {
+    min-width: 280px;
+    background: #ffffff;
+    border-radius: 15px;
+    padding: 1.5rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-6px);
+}
+.testimonial-card img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-bottom: 0.8rem;
+}
+
