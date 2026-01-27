@@ -214,4 +214,52 @@ nav a:hover::after {
     background-repeat: no-repeat;
     color: white;
 }
+.why {
+    padding: 4rem 2rem;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+}
+
+.why h2 {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.why-container {
+    display: flex;
+    flex-direction: column; /* keeps cards vertical */
+    gap: 1.5rem;           /* spacing between cards */
+    max-width: 600px;       /* center and limit width */
+    margin: 0 auto;
+}
+
+.why-card {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+}
+
+.why-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.18);
+}
+
+.why-card .icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.8rem;
+}
+
+.why-card h3 {
+    margin-bottom: 0.5rem;
+    color: #2c5364;
+}
+
+.why-card p {
+    font-size: 1rem;
+    color: #555;
+}
 
