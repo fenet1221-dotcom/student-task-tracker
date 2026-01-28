@@ -1,6 +1,3 @@
-console.log("SCRIPT IS LOADED");
-alert("SCRIPT IS LOADED");
-
 
 const taskForm = document.getElementById("taskForm");
 const taskTitle = document.getElementById("taskTitle");
@@ -8,12 +5,10 @@ const taskDesc = document.getElementById("taskDesc");
 const taskDueDate = document.getElementById("taskDueDate");
 const taskList = document.getElementById("tasks");
 
-// Load tasks from localStorage when page loads
+
 document.addEventListener("DOMContentLoaded", loadTasks);
 
-/*************
- ADD NEW TASK
-*************/
+
 if (taskForm) {
     taskForm.addEventListener("submit", function (e) {
         e.preventDefault();
@@ -28,7 +23,7 @@ if (taskForm) {
         }
 
         const task = {
-            id: Date.now(), // unique ID for each task
+            id: Date.now(), 
             title,
             desc,
             due,
@@ -38,16 +33,13 @@ if (taskForm) {
         addTaskToDOM(task);
         saveTask(task);
 
-        // Clear form
+      
         taskTitle.value = "";
         taskDesc.value = "";
         taskDueDate.value = "";
     });
 }
 
-/*************
- ADD TASK TO DOM
-*************/
 function addTaskToDOM(task) {
     const li = document.createElement("li");
     li.dataset.id = task.id;
@@ -55,8 +47,6 @@ function addTaskToDOM(task) {
     if (task.completed) {
         li.classList.add("completed");
     }
-
-    // Task header (checkbox + title + due date)
     const header = document.createElement("div");
     header.classList.add("task-header");
 
@@ -77,62 +67,56 @@ function addTaskToDOM(task) {
     header.appendChild(title);
     header.appendChild(due);
 
-    // Task description (hidden by default)
+   
     const desc = document.createElement("div");
     desc.classList.add("task-desc");
     desc.textContent = task.desc;
 
-    // Delete button
+
     const deleteBtn = document.createElement("button");
     deleteBtn.textContent = "Delete";
 
-    // Append everything
+ 
     li.appendChild(header);
     li.appendChild(desc);
     li.appendChild(deleteBtn);
     taskList.appendChild(li);
 
-    /********* EVENT LISTENERS *********/
-
-    // Toggle description on header click
+    
     header.addEventListener("click", () => {
-        if (desc.textContent) { // only if description exists
+        if (desc.textContent) { 
             desc.style.display = desc.style.display === "block" ? "none" : "block";
         }
     });
 
-    // Checkbox to mark completed
+    
     checkbox.addEventListener("change", () => {
         li.classList.toggle("completed");
         updateTaskCompletion(task.id, checkbox.checked);
     });
 
-    // Delete task
+    
     deleteBtn.addEventListener("click", (e) => {
-        e.stopPropagation(); // prevent toggling description
+        e.stopPropagation(); 
         li.remove();
         deleteTask(task.id);
     });
 }
 
-/*************
- LOCALSTORAGE HELPERS
-*************/
 
-// Get all tasks
 function getTasksFromStorage() {
     const tasks = localStorage.getItem("tasks");
     return tasks ? JSON.parse(tasks) : [];
 }
 
-// Save new task
+
 function saveTask(task) {
     const tasks = getTasksFromStorage();
     tasks.push(task);
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-// Update task completion
+
 function updateTaskCompletion(id, completed) {
     const tasks = getTasksFromStorage();
     const task = tasks.find(t => t.id == id);
@@ -142,14 +126,14 @@ function updateTaskCompletion(id, completed) {
     }
 }
 
-// Delete task
+
 function deleteTask(id) {
     let tasks = getTasksFromStorage();
     tasks = tasks.filter(t => t.id != id);
     localStorage.setItem("tasks", JSON.stringify(tasks));
 }
 
-// Load tasks on page load
+
 function loadTasks() {
     const tasks = getTasksFromStorage();
     tasks.forEach(task => addTaskToDOM(task));

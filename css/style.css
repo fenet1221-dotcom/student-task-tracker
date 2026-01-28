@@ -227,9 +227,9 @@ nav a:hover::after {
 
 .why-container {
     display: flex;
-    flex-direction: column; /* keeps cards vertical */
-    gap: 1.5rem;           /* spacing between cards */
-    max-width: 600px;       /* center and limit width */
+    flex-direction: column; 
+    gap: 1.5rem;        
+    max-width: 600px;     
     margin: 0 auto;
 }
 
@@ -318,7 +318,7 @@ transform: translateY(-2px);
     border-radius: 12px;
     box-shadow: 0 8px 18px rgba(0,0,0,0.1);
     display: flex;
-    flex-direction: column; /* now allows description below header */
+    flex-direction: column; 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
@@ -341,7 +341,7 @@ transform: translateY(-2px);
 
 .task-desc {
     margin-top: 0.5rem;
-    display: none; /* hidden by default */
+    display: none; 
     font-size: 0.9rem;
     color: #555;
 }
@@ -361,11 +361,11 @@ transform: translateY(-2px);
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.2s ease;
 }
-/* Footer always at bottom */
+
 footer {
     text-align: center;
     padding: 1rem 0;
-    background-color: #2c5364; /* or match your header color */
+    background-color: #2c5364; 
     color: white;
     position: fixed;
     bottom: 0;
