@@ -1,8 +1,5 @@
-/************************************
- ENHANCED STUDENT TASK TRACKER JS
-************************************/
+alert("Script loaded");
 
-// Select DOM elements
 const taskForm = document.getElementById("taskForm");
 const taskTitle = document.getElementById("taskTitle");
 const taskDesc = document.getElementById("taskDesc");
