@@ -1,4 +1,6 @@
-alert("Script loaded");
+console.log("SCRIPT IS LOADED");
+alert("SCRIPT IS LOADED");
+
 
 const taskForm = document.getElementById("taskForm");
 const taskTitle = document.getElementById("taskTitle");
