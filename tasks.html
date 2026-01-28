@@ -19,15 +19,12 @@
         </nav>
         </header>
         <main>
-           <section class="task-input">
+          <section class="task-input">
     <h2>Add a New Task</h2>
     <form id="taskForm">
-        <input
-            type="text"
-            id="taskTitle"
-            placeholder="Enter your task"
-            required
-        >
+        <input type="text" id="taskTitle" placeholder="Task Title" required>
+        <input type="date" id="taskDueDate" placeholder="Due Date">
+        <textarea id="taskDesc" placeholder="Task Description (optional)"></textarea>
         <button type="submit">Add Task</button>
     </form>
 </section>
@@ -35,10 +32,9 @@
 <section class="task-list">
     <h2>Your Tasks</h2>
     <ul id="tasks">
-       
+        <!-- Tasks will be dynamically added here -->
     </ul>
 </section>
-
         </main>
          <footer>
         <p>&copy; 2026 Student Task Tracker</p>
