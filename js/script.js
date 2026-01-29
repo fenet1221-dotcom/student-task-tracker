@@ -114,6 +114,8 @@ function saveTask(task) {
     const tasks = getTasksFromStorage();
     tasks.push(task);
     localStorage.setItem("tasks", JSON.stringify(tasks));
+    showNotification("Task saved successfully ✅");
+
 }
 
 
@@ -149,3 +151,4 @@ function showNotification(message) {
         notification.classList.remove("show");
     }, 2000);
 }
+
