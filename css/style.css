@@ -55,6 +55,19 @@ nav a:hover::after {
     width: 100%;
 }
 .landing {
+    font-family: 'Poppins', sans-serif;
+}
+
+.landing h1 {
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.landing p {
+    font-weight: 400;
+}
+
+.landing {
     background-image: url("../images/books.png");
 
     background-size: cover;
@@ -385,7 +398,7 @@ footer {
     }
 
    
-    .welcome {
+    .landing{
         padding: 3rem 1.5rem;
         text-align: center;
     }
