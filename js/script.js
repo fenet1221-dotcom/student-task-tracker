@@ -115,6 +115,7 @@ function saveTask(task) {
     tasks.push(task);
     localStorage.setItem("tasks", JSON.stringify(tasks));
     showNotification("Task saved successfully ✅");
+playClickSound();
 
 }
 
@@ -125,6 +126,8 @@ function updateTaskCompletion(id, completed) {
     if (task) {
         task.completed = completed;
         localStorage.setItem("tasks", JSON.stringify(tasks));
+        playClickSound();
+
     }
 }
 
@@ -133,6 +136,8 @@ function deleteTask(id) {
     let tasks = getTasksFromStorage();
     tasks = tasks.filter(t => t.id != id);
     localStorage.setItem("tasks", JSON.stringify(tasks));
+    playClickSound();
+
 }
 
 
@@ -150,5 +155,11 @@ function showNotification(message) {
     setTimeout(() => {
         notification.classList.remove("show");
     }, 2000);
+}
+const clickSound = new Audio("sounds/click.wav");
+
+function playClickSound() {
+    clickSound.currentTime = 0;
+    clickSound.play();
 }
 
