@@ -138,3 +138,14 @@ function loadTasks() {
     const tasks = getTasksFromStorage();
     tasks.forEach(task => addTaskToDOM(task));
 }
+function showNotification(message) {
+    const notification = document.getElementById("notification");
+    if (!notification) return;
+
+    notification.textContent = message;
+    notification.classList.add("show");
+
+    setTimeout(() => {
+        notification.classList.remove("show");
+    }, 2000);
+}
