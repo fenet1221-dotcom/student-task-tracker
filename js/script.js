@@ -1,12 +1,16 @@
+document.addEventListener("DOMContentLoaded", () => {
+    console.log("script.js loaded");
 
-const taskForm = document.getElementById("taskForm");
-const taskTitle = document.getElementById("taskTitle");
-const taskDesc = document.getElementById("taskDesc");
-const taskDueDate = document.getElementById("taskDueDate");
-const taskList = document.getElementById("tasks");
+    const taskForm = document.getElementById("taskForm");
+    const taskTitle = document.getElementById("taskTitle");
+    const taskDesc = document.getElementById("taskDesc");
+    const taskDueDate = document.getElementById("taskDueDate");
+    const taskList = document.getElementById("tasks");
 
+    console.log("taskList:", taskList);
 
-document.addEventListener("DOMContentLoaded", loadTasks);
+    
+
 
 
 if (taskForm) {
@@ -77,10 +81,15 @@ function addTaskToDOM(task) {
     deleteBtn.textContent = "Delete";
 
  
-    li.appendChild(header);
-    li.appendChild(desc);
-    li.appendChild(deleteBtn);
-    taskList.appendChild(li);
+   const taskText = document.createElement("div");
+taskText.classList.add("task-text");
+
+taskText.appendChild(header);
+taskText.appendChild(desc);
+
+li.appendChild(taskText);
+li.appendChild(deleteBtn);
+
 
     
     header.addEventListener("click", () => {
@@ -104,6 +113,8 @@ function addTaskToDOM(task) {
         li.remove();
         deleteTask(task.id);
     });
+    taskList.appendChild(li);
+
 }
 
 
@@ -167,4 +178,6 @@ function playClickSound() {
     clickSound.currentTime = 0;
     clickSound.play();
 }
+loadTasks();
 
+});
