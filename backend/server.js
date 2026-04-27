@@ -1,176 +1,73 @@
-const http = require('http');
-const fs = require('fs');
+const http = require("http");
+const fs = require("fs");
 
 const server = http.createServer((req, res) => {
 
-    // GET /tasks → read all tasks
-    if (req.method === 'GET' && req.url === '/tasks') {
-        fs.readFile(__dirname + '/tasks.json', 'utf8', (err, data) => {
-            if (err) {
-                res.writeHead(500, { 'Content-Type': 'application/json' });
-                return res.end(JSON.stringify({ message: 'Error reading file' }));
-            }
+    // CORS
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE,OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(data);
-        });
+    if (req.method === "OPTIONS") {
+        res.writeHead(204);
+        return res.end();
     }
 
-    // POST /tasks → create new task
-    else if (req.method === 'POST' && req.url === '/tasks') {
+    // READ FILE HELP
+    const getTasks = () => {
+        try {
+            const data = fs.readFileSync("tasks.json");
+            return JSON.parse(data);
+        } catch {
+            return [];
+        }
+    };
 
-        let body = '';
+    const saveTasks = (tasks) => {
+        fs.writeFileSync("tasks.json", JSON.stringify(tasks, null, 2));
+    };
 
-        req.on('data', chunk => {
-            body += chunk.toString();
-        });
+    // GET TASKS
+    if (req.url === "/tasks" && req.method === "GET") {
+        const tasks = getTasks();
+        res.writeHead(200, { "Content-Type": "application/json" });
+        return res.end(JSON.stringify(tasks));
+    }
 
-        req.on('end', () => {
+    // POST TASK
+    if (req.url === "/tasks" && req.method === "POST") {
+        let body = "";
+
+        req.on("data", chunk => body += chunk);
+
+        req.on("end", () => {
+            const tasks = getTasks();
             const newTask = JSON.parse(body);
 
-            fs.readFile(__dirname + '/tasks.json', 'utf8', (err, data) => {
-                if (err) {
-                    res.writeHead(500, { 'Content-Type': 'application/json' });
-                    return res.end(JSON.stringify({ message: 'Error reading file' }));
-                }
+            newTask.id = Date.now();
+            tasks.push(newTask);
 
-                const tasks = JSON.parse(data);
+            saveTasks(tasks);
 
-                // give ID
-                newTask.id = Date.now();
-
-                tasks.push(newTask);
-
-                fs.writeFile(__dirname + '/tasks.json', JSON.stringify(tasks, null, 2), (err) => {
-                    if (err) {
-                        res.writeHead(500, { 'Content-Type': 'application/json' });
-                        return res.end(JSON.stringify({ message: 'Error saving file' }));
-                    }
-
-                    res.writeHead(201, { 'Content-Type': 'application/json' });
-                    res.end(JSON.stringify(newTask));
-                });
-            });
+            res.writeHead(200, { "Content-Type": "application/json" });
+            res.end(JSON.stringify(newTask));
         });
     }
-    //put
-else if (req.method === 'PUT' && req.url.startsWith('/tasks/')) {
 
-    const id = req.url.split('/')[2];
-    let body = '';
+    // DELETE TASK
+    if (req.url.startsWith("/tasks/") && req.method === "DELETE") {
+        const id = req.url.split("/")[2];
+        let tasks = getTasks();
 
-    req.on('data', chunk => {
-        body += chunk.toString();
-    });
+        tasks = tasks.filter(t => t.id != id);
+        saveTasks(tasks);
 
-    req.on('end', () => {
-
-        const updatedTask = JSON.parse(body);
-
-        fs.readFile(__dirname + '/tasks.json', 'utf8', (err, data) => {
-            if (err) {
-                res.writeHead(500, { 'Content-Type': 'application/json' });
-                return res.end(JSON.stringify({ message: 'Error reading file' }));
-            }
-
-            let tasks = JSON.parse(data);
-
-            let found = false;
-
-            tasks = tasks.map(task => {
-                if (task.id == id) {
-                    found = true;
-                    return { ...task, ...updatedTask, id: task.id };
-                }
-                return task;
-            });
-
-            if (!found) {
-                res.writeHead(404, { 'Content-Type': 'application/json' });
-                return res.end(JSON.stringify({ message: 'Task not found' }));
-            }
-
-            fs.writeFile(__dirname + '/tasks.json', JSON.stringify(tasks, null, 2), (err) => {
-                if (err) {
-                    res.writeHead(500, { 'Content-Type': 'application/json' });
-                    return res.end(JSON.stringify({ message: 'Error saving file' }));
-                }
-
-                res.writeHead(200, { 'Content-Type': 'application/json' });
-                res.end(JSON.stringify({ message: 'Task updated successfully' }));
-            });
-        });
-    });
-}
-else if (req.method === 'DELETE' && req.url.startsWith('/tasks/')) {
-
-    const id = req.url.split('/')[2];
-
-    fs.readFile(__dirname + '/tasks.json', 'utf8', (err, data) => {
-        if (err) {
-            res.writeHead(500, { 'Content-Type': 'application/json' });
-            return res.end(JSON.stringify({ message: 'Error reading file' }));
-        }
-
-        let tasks = JSON.parse(data);
-
-        const newTasks = tasks.filter(task => task.id != id);
-
-        if (tasks.length === newTasks.length) {
-            res.writeHead(404, { 'Content-Type': 'application/json' });
-            return res.end(JSON.stringify({ message: 'Task not found' }));
-        }
-
-        fs.writeFile(__dirname + '/tasks.json', JSON.stringify(newTasks, null, 2), (err) => {
-            if (err) {
-                res.writeHead(500, { 'Content-Type': 'application/json' });
-                return res.end(JSON.stringify({ message: 'Error saving file' }));
-            }
-
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: 'Task deleted successfully' }));
-        });
-    });
-}
-//delete
-else if (req.method === 'DELETE' && req.url.startsWith('/tasks/')) {
-
-    const id = req.url.split('/')[2];
-
-    fs.readFile(__dirname + '/tasks.json', 'utf8', (err, data) => {
-        if (err) {
-            res.writeHead(500, { 'Content-Type': 'application/json' });
-            return res.end(JSON.stringify({ message: 'Error reading file' }));
-        }
-
-        let tasks = JSON.parse(data);
-
-        const newTasks = tasks.filter(task => task.id != id);
-
-        if (tasks.length === newTasks.length) {
-            res.writeHead(404, { 'Content-Type': 'application/json' });
-            return res.end(JSON.stringify({ message: 'Task not found' }));
-        }
-
-        fs.writeFile(__dirname + '/tasks.json', JSON.stringify(newTasks, null, 2), (err) => {
-            if (err) {
-                res.writeHead(500, { 'Content-Type': 'application/json' });
-                return res.end(JSON.stringify({ message: 'Error saving file' }));
-            }
-
-            res.writeHead(200, { 'Content-Type': 'application/json' });
-            res.end(JSON.stringify({ message: 'Task deleted successfully' }));
-        });
-    });
-}
-    // Default route
-    else {
-        res.writeHead(404, { 'Content-Type': 'text/plain' });
-        res.end('Route not found');
+        res.writeHead(200);
+        return res.end("Deleted");
     }
-    
+
 });
 
 server.listen(3000, () => {
-    console.log('Server running on port 3000');
+    console.log("Server running on port 3000");
 });
